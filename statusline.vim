@@ -4,6 +4,7 @@ set statusline+=%#StatusLin1#
 set statusline+=\ %{get(mode_map,mode())} " Mode
 set statusline+=\ %#StatusSep1#%#StatusLin2#
 set statusline+=%#StatusLin2#
+set statusline+=%{StatusLineGitBranch()}
 set statusline+=\ %f                      " Filename
 set statusline+=\ %#StatusSep2#%#StatusLin3#
 set statusline+=%{StatusLineIcon()}       " Read-only or modified
@@ -56,6 +57,20 @@ function! StatusLineChangeColor()
   endif
   return ''
 endfunction
+
+let s:gitBranch = ''
+function! StatusLineSetGitBranch()
+  let b:branch = system('git branch --no-color --format="#%(refname:lstrip=2)"')
+  if b:branch =~# '#'
+    let s:gitBranch = " \uE0A0".substitute(b:branch, '[\w\n#]', '', 'g').' '
+  else
+    let s:gitBranch = ''
+  endif
+endfunction
+function! StatusLineGitBranch()
+  return s:gitBranch
+endfunction
+autocmd BufRead * call StatusLineSetGitBranch()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
