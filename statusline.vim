@@ -5,9 +5,9 @@ set statusline+=\ %{get(mode_map,mode())}
 set statusline+=\ %#StatusSep1#%#StatusLin2#
 set statusline+=%#StatusLin2#
 set statusline+=\ %f  " Filename
-set statusline+=\%{StatusLineReadOnly()}  " Readonly?
 set statusline+=\ %#StatusSep2#%#StatusLin3#
-set statusline+=%=  " Seperator
+set statusline+=\ %{StatusLineIcon()}
+set statusline+=%#StatusLin3#%=  " Seperator
 set statusline+=%{&ff}     " File Format
 set statusline+=%{StatusLineFileTypeSep()}
 set statusline+=%{&ft}\    " File Type
@@ -24,11 +24,13 @@ hi StatusSep3 ctermfg=102 ctermbg=236
 hi StatusLin4 ctermfg=237 ctermbg=102
 "      
 
-function! StatusLineReadOnly()
+function! StatusLineIcon()
   if &readonly || !&modifiable
-    return ' '
+    return ''
+  elseif &modified
+    return '+'
   else
-    return ''
+    return ' '
 endfunction
 
 function! StatusLineFileTypeSep()
