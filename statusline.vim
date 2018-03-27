@@ -6,7 +6,7 @@ set statusline+=\ %#StatusSep1#%#StatusLin2#
 set statusline+=%#StatusLin2#
 set statusline+=\ %f                      " Filename
 set statusline+=\ %#StatusSep2#%#StatusLin3#
-set statusline+=\ %{StatusLineIcon()}     " Read-only or modified
+set statusline+=%{StatusLineIcon()}       " Read-only or modified
 set statusline+=%#StatusLin3#%=           " Seperator
 set statusline+=%{&ff}                    " File Format
 set statusline+=%{StatusLineFileTypeSep()}
@@ -26,11 +26,11 @@ hi StatusLin4 ctermfg=237 ctermbg=102
 
 function! StatusLineIcon()
   if &readonly || !&modifiable
-    return ''
+    return ' '
   elseif &modified
-    return '+'
+    return ' +'
   else
-    return ' '
+    return '  '
 endfunction
 
 function! StatusLineFileTypeSep()
