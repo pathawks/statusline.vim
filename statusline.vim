@@ -12,7 +12,7 @@ set statusline+=%{&ff}                    " File Format
 set statusline+=%{StatusLineFileTypeSep()}
 set statusline+=%{&ft}\                   " File Type
 set statusline+=%#StatusSep3#%#StatusLin4#
-set statusline+=\ %2p%%                   " Percent through file
+set statusline+=%3p%%                     " Percent through file
 set statusline+=\ 
 set statusline+=\ %3l\:%-3c               " Line and column
 hi StatusLin1 ctermfg=239 ctermbg=109
