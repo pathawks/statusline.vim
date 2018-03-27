@@ -62,7 +62,7 @@ let s:gitBranch = ''
 function! StatusLineSetGitBranch()
   let b:dir = expand('%:h')
   let b:branch = system(expand('git -C "'.b:dir.'" rev-parse --abbrev-ref HEAD'))
-  if b:branch =~# '#'
+  if b:branch !~# 'fatal: '
     let s:gitBranch = " \uE0A0".substitute(b:branch, '[\w\n#]', '', 'g').' '
   else
     let s:gitBranch = ''
