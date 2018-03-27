@@ -1,20 +1,20 @@
 set laststatus=2
 set statusline=%{StatusLineChangeColor()}
 set statusline+=%#StatusLin1#
-set statusline+=\ %{get(mode_map,mode())}
+set statusline+=\ %{get(mode_map,mode())} " Mode
 set statusline+=\ %#StatusSep1#%#StatusLin2#
 set statusline+=%#StatusLin2#
-set statusline+=\ %f  " Filename
+set statusline+=\ %f                      " Filename
 set statusline+=\ %#StatusSep2#%#StatusLin3#
-set statusline+=\ %{StatusLineIcon()}
-set statusline+=%#StatusLin3#%=  " Seperator
-set statusline+=%{&ff}     " File Format
+set statusline+=\ %{StatusLineIcon()}     " Read-only or modified
+set statusline+=%#StatusLin3#%=           " Seperator
+set statusline+=%{&ff}                    " File Format
 set statusline+=%{StatusLineFileTypeSep()}
-set statusline+=%{&ft}\    " File Type
+set statusline+=%{&ft}\                   " File Type
 set statusline+=%#StatusSep3#%#StatusLin4#
-set statusline+=\ %2p%% " Percent through file
+set statusline+=\ %2p%%                   " Percent through file
 set statusline+=\ 
-set statusline+=\ %3l\:%-3c " Line and column
+set statusline+=\ %3l\:%-3c               " Line and column
 hi StatusLin1 ctermfg=239 ctermbg=109
 hi StatusSep1 ctermfg=109 ctermbg=239
 hi StatusLin2 ctermfg=151 ctermbg=239
