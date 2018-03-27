@@ -60,7 +60,8 @@ endfunction
 
 let s:gitBranch = ''
 function! StatusLineSetGitBranch()
-  let b:branch = system('git branch --no-color --format="#%(refname:lstrip=2)"')
+  let b:dir = expand('%:h')
+  let b:branch = system(expand('git -C "'.b:dir.'" branch --no-color --format="#%(refname:lstrip=2)"'))
   if b:branch =~# '#'
     let s:gitBranch = " \uE0A0".substitute(b:branch, '[\w\n#]', '', 'g').' '
   else
@@ -70,7 +71,7 @@ endfunction
 function! StatusLineGitBranch()
   return s:gitBranch
 endfunction
-autocmd BufRead * call StatusLineSetGitBranch()
+autocmd BufEnter * call StatusLineSetGitBranch()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
