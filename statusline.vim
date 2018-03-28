@@ -71,7 +71,7 @@ endfunction
 function! StatusLineGitBranch()
   return s:gitBranch
 endfunction
-autocmd BufEnter * call StatusLineSetGitBranch()
+autocmd BufEnter,ShellCmdPost * call StatusLineSetGitBranch()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
