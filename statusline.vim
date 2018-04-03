@@ -75,9 +75,13 @@ function! StatusLineSetGitBranch()
   if b:branch !~# 'fatal: '
     let s:gitBranch = "\uE0A0".substitute(b:branch, '[\w\n#]', '', 'g')
     let s:gitBranchSep = ' '
+    hi StatusRuf0 ctermfg=239 ctermbg=000
+    hi StatusRuf1 ctermfg=102 ctermbg=239
   else
     let s:gitBranch = ''
     let s:gitBranchSep = ''
+    hi StatusRuf0 ctermfg=000 ctermbg=000
+    hi StatusRuf1 ctermfg=102 ctermbg=000
   endif
 endfunction
 function! StatusLineGitBranch()
