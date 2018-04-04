@@ -75,7 +75,7 @@ function! StatusLineSetGitBranch()
   let b:branch = system(expand('git -C "'.b:dir.'" rev-parse --abbrev-ref HEAD'))
   if b:branch !~# 'fatal: '
     let l:branch = substitute(b:branch, '[\w\n#]', '', 'g')
-    if len(l:branch) > 13
+    if strwidth(l:branch) > 13
       let l:branch = strpart(l:branch,0,12).'…'
     endif
     let s:gitBranchRul = "\uE0A0".l:branch
