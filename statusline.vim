@@ -70,7 +70,7 @@ function! StatusLineChangeColor()
 endfunction
 
 let s:gitBranch = ''
-function! StatusLineSetGitBranch()
+function! s:StatusLineSetGitBranch()
   let b:dir = expand('%:h')
   let b:branch = system(expand('git -C "'.b:dir.'" rev-parse --abbrev-ref HEAD'))
   if b:branch !~# 'fatal: '
@@ -95,7 +95,7 @@ endfunction
 function! StatusLineRulerGitBranch()
   return b:gitBranchRul
 endfunction
-autocmd BufEnter,ShellCmdPost * call StatusLineSetGitBranch()
+autocmd BufEnter,ShellCmdPost * call s:StatusLineSetGitBranch()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
