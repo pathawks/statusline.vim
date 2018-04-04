@@ -78,22 +78,22 @@ function! StatusLineSetGitBranch()
     if strwidth(l:branch) > 13
       let l:branch = strpart(l:branch,0,12).'…'
     endif
-    let s:gitBranchRul = "\uE0A0".l:branch
-    let s:gitBranchStat = '  '.s:gitBranchRul.' '
+    let b:gitBranchRul = "\uE0A0".l:branch
+    let b:gitBranchStat = '  '.b:gitBranchRul.' '
     hi StatusRuf0 ctermfg=239 ctermbg=000
     hi StatusRuf1 ctermfg=102 ctermbg=239
   else
-    let s:gitBranch = ''
-    let s:gitBranchSep = ''
+    let b:gitBranchRul = ''
+    let b:gitBranchStat = ''
     hi StatusRuf0 ctermfg=000 ctermbg=000
     hi StatusRuf1 ctermfg=102 ctermbg=000
   endif
 endfunction
 function! StatusLineGitBranch()
-  return s:gitBranchStat
+  return b:gitBranchStat
 endfunction
 function! StatusLineRulerGitBranch()
-  return s:gitBranchRul
+  return b:gitBranchRul
 endfunction
 autocmd BufEnter,ShellCmdPost * call StatusLineSetGitBranch()
 
