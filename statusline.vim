@@ -30,7 +30,7 @@ hi StatusRuf1 ctermfg=102 ctermbg=239
 
 set laststatus=1
 set ruler
-set ruf=%30(%=%#StatusRuf0#%#StatusLin2#%{StatusLineRulerGitBranch()}%#StatusRuf1#%#StatusLin4#%3p%%\ %4l:%-3c%)
+set ruf=%32(%=%#StatusRuf0#%#StatusLin2#%{StatusLineRulerGitBranch()}%#StatusRuf1#%#StatusLin4#%3p%%\ %4l:%-3c%)
 
 function! StatusLineIcon()
   if &readonly || !&modifiable
@@ -74,7 +74,11 @@ function! StatusLineSetGitBranch()
   let b:dir = expand('%:h')
   let b:branch = system(expand('git -C "'.b:dir.'" rev-parse --abbrev-ref HEAD'))
   if b:branch !~# 'fatal: '
-    let s:gitBranchRul = "\uE0A0".substitute(b:branch, '[\w\n#]', '', 'g')
+    let l:branch = substitute(b:branch, '[\w\n#]', '', 'g')
+    if len(l:branch) > 13
+      let l:branch = strpart(l:branch,0,12).'…'
+    endif
+    let s:gitBranchRul = "\uE0A0".l:branch
     let s:gitBranchStat = '  '.s:gitBranchRul.' '
     hi StatusRuf0 ctermfg=239 ctermbg=000
     hi StatusRuf1 ctermfg=102 ctermbg=239
