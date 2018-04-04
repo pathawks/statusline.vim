@@ -1,9 +1,10 @@
 set laststatus=2
-set statusline=%{StatusLineChangeColor()}
+" set statusline=%{StatusLineChangeColor()}
 " set statusline+=%#StatusLin1#
 " set statusline+=\ %{get(mode_map,mode())} " Mode
 " set statusline+=\ %#StatusSep1#%#StatusLin2#
-set statusline+=%#StatusLin2#
+" set statusline+=%#StatusLin2#
+set statusline=%#StatusLin2#
 set statusline+=%{StatusLineGitBranch()}
 set statusline+=\ %f                      " Filename
 set statusline+=\ %#StatusSep2#%#StatusLin3#
@@ -73,8 +74,8 @@ function! StatusLineSetGitBranch()
   let b:dir = expand('%:h')
   let b:branch = system(expand('git -C "'.b:dir.'" rev-parse --abbrev-ref HEAD'))
   if b:branch !~# 'fatal: '
-    let s:gitBranch = "\uE0A0".substitute(b:branch, '[\w\n#]', '', 'g')
-    let s:gitBranchSep = ' '
+    let s:gitBranchRul = "\uE0A0".substitute(b:branch, '[\w\n#]', '', 'g')
+    let s:gitBranchStat = '  '.s:gitBranchRul.' '
     hi StatusRuf0 ctermfg=239 ctermbg=000
     hi StatusRuf1 ctermfg=102 ctermbg=239
   else
@@ -85,10 +86,10 @@ function! StatusLineSetGitBranch()
   endif
 endfunction
 function! StatusLineGitBranch()
-  return "  ".s:gitBranch.s:gitBranchSep
+  return s:gitBranchStat
 endfunction
 function! StatusLineRulerGitBranch()
-  return s:gitBranch
+  return s:gitBranchRul
 endfunction
 autocmd BufEnter,ShellCmdPost * call StatusLineSetGitBranch()
 
