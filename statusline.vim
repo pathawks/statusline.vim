@@ -18,7 +18,7 @@ hi StatusSep3 ctermfg=102 ctermbg=236
 hi StatusLin4 ctermfg=237 ctermbg=102
 hi StatusRuf0 ctermfg=239 ctermbg=000
 hi StatusRuf1 ctermfg=102 ctermbg=239
-"      
+"          ╳
 
 set ruf=%32(%=%#StatusRuf0#%#StatusLin2#%{StatusLineRulerGitBranch()}%#StatusRuf1#%#StatusLin4#\ %{StatusLineGetPercent()}%3l:%-3c%)
 
