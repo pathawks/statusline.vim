@@ -14,7 +14,7 @@ set statusline+=%{&ff}                    " File Format
 set statusline+=%{StatusLineFileTypeSep()}
 set statusline+=%{&ft}\                   " File Type
 set statusline+=%#StatusSep3#%#StatusLin4#
-set statusline+=%3p%%                     " Percent through file
+set statusline+=%{StatusLineGetPercent()} " Percent through file
 set statusline+=\ 
 set statusline+=\ %3l\:%-3c               " Line and column
 hi StatusLin1 ctermfg=239 ctermbg=109
@@ -30,7 +30,7 @@ hi StatusRuf1 ctermfg=102 ctermbg=239
 
 set laststatus=1
 set ruler
-set ruf=%32(%=%#StatusRuf0#%#StatusLin2#%{StatusLineRulerGitBranch()}%#StatusRuf1#%#StatusLin4#%3p%%\ %4l:%-3c%)
+set ruf=%32(%=%#StatusRuf0#%#StatusLin2#%{StatusLineRulerGitBranch()}%#StatusRuf1#%#StatusLin4#\ %{StatusLineGetPercent()}\ %4l:%-3c%)
 
 function! StatusLineIcon()
   if &readonly || !&modifiable
@@ -96,6 +96,27 @@ function! StatusLineRulerGitBranch()
   return b:gitBranchRul
 endfunction
 autocmd BufEnter,ShellCmdPost * call s:StatusLineSetGitBranch()
+
+function! s:SetPercent()
+  let l:percent = line('.')*100/line('$')
+  if line('w$')==line('$')
+    if line('w0')<=1
+      let b:StatusLinePercent = 'All'
+    else
+      let b:StatusLinePercent = 'Bot'
+    endif
+  elseif line('w0')<=1
+    let b:StatusLinePercent = 'Top'
+  elseif l:percent < 10
+    let b:StatusLinePercent = ' '.l:percent.'%'
+  else
+    let b:StatusLinePercent = l:percent.'%'
+  endif
+endfunction
+function! StatusLineGetPercent()
+  return b:StatusLinePercent
+endfunction
+autocmd BufEnter,CursorMoved,CursorMovedI * call s:SetPercent()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
