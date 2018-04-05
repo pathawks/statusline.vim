@@ -89,12 +89,18 @@ function! s:StatusLineSetGitBranch()
   endif
 endfunction
 function! StatusLineGitBranch()
+  if !exists("b:gitBranchStat")
+    call s:StatusLineSetGitBranch()
+  endif
   return b:gitBranchStat
 endfunction
 function! StatusLineRulerGitBranch()
+  if !exists("b:gitBranchRul")
+    call s:StatusLineSetGitBranch()
+  endif
   return b:gitBranchRul
 endfunction
-autocmd BufEnter,BufCreate,ShellCmdPost * call s:StatusLineSetGitBranch()
+autocmd ShellCmdPost * call s:StatusLineSetGitBranch()
 
 function! s:SetPercent()
   let l:percent = line('.')*100/line('$')
@@ -102,20 +108,23 @@ function! s:SetPercent()
     if line('w0')<=1
       let b:StatusLinePercent = ''
     else
-      let b:StatusLinePercent = 'Bot'.'  '
+      let b:StatusLinePercent = 'Bot  '
     endif
   elseif line('w0')<=1
-    let b:StatusLinePercent = 'Top'.'  '
+    let b:StatusLinePercent = 'Top  '
   elseif l:percent < 10
-    let b:StatusLinePercent = ' '.l:percent.'%'.'  '
+    let b:StatusLinePercent = ' '.l:percent.'%  '
   else
-    let b:StatusLinePercent = l:percent.'%'.'  '
+    let b:StatusLinePercent = l:percent.'%  '
   endif
 endfunction
 function! StatusLineGetPercent()
+  if !exists("b:StatusLinePercent")
+    call s:SetPercent()
+  endif
   return b:StatusLinePercent
 endfunction
-autocmd BufEnter,CursorMoved,CursorMovedI * call s:SetPercent()
+autocmd CursorMoved,CursorMovedI * call s:SetPercent()
 
 let mode_map = {
 \ 'n': 'NORMAL', 'i': 'INSERT', 'R': 'REPLACE', 'v': 'VISUAL', 'V': 'V-LINE', "\<C-v>": 'V-BLOCK',
