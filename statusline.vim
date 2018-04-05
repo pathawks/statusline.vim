@@ -94,7 +94,7 @@ endfunction
 function! StatusLineRulerGitBranch()
   return b:gitBranchRul
 endfunction
-autocmd BufEnter,ShellCmdPost * call s:StatusLineSetGitBranch()
+autocmd BufEnter,BufCreate,ShellCmdPost * call s:StatusLineSetGitBranch()
 
 function! s:SetPercent()
   let l:percent = line('.')*100/line('$')
