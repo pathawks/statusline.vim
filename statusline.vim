@@ -4,7 +4,7 @@ set statusline+=\ %f                      " Filename
 set statusline+=\ %#StatusSep2#%#StatusLin3#
 set statusline+=%{StatusLineIcon()}       " Read-only or modified
 set statusline+=%#StatusLin3#%=           " Seperator
-set statusline+=%{&ff}                    " File Format
+set statusline+=%{&ff}\                   " File Format
 set statusline+=%{StatusLineFileType()}   " File Type
 set statusline+=%#StatusSep3#%#StatusLin4#
 set statusline+=\ %{StatusLineGetPercent()} " Percent through file
@@ -35,7 +35,7 @@ function! StatusLineFileType()
   if empty(&ft)
     return ''
   else
-    return '   '.&ft.' '
+    return ' '.&ft.' '
 endfunction
 
 let s:gitBranch = ''
